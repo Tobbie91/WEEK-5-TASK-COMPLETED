@@ -5,6 +5,7 @@
   "author": "Decagon <info@decagon.dev>",
   "private": true,
   "scripts": {
+    "start":"nodemon lib/app",
     "serve":"node lib/app"
   },
   "dependencies": {
