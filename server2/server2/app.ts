@@ -1,20 +1,16 @@
 import http, { IncomingMessage, Server, ServerResponse } from "http";
-import cheerio, { CheerioAPI } from "cheerio";
-import { getResult } from "./controllers"
-
+import { parser } from "html-metadata-parser"
 /*
 implement your server code here
 */
-let url = "https://www.youtube.com/watch?v=eSzNNYk7nVU";
-
-const server: Server = http.createServer(
-  (req: IncomingMessage, res: ServerResponse) => {
-    if (req.method === "GET" && req.url === "/") {
-      return getResult(req, res, url)
-    }
+const server: Server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+  if (req.url === "/" && req.method === "GET") {
+    const result = await parser("https://www.youtube.com/");
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(JSON.stringify(result, null, 2));
+    console.log(JSON.stringify(result, null, 2))
   }
+}
 );
-
-const PORT = 3120;
-
-server.listen(PORT, () => `Server is running on port ${PORT}`);
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

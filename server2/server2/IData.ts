@@ -1,7 +1,7 @@
-interface Data {
-    title?: string;
-    description?: string;
-    image?: string;
-  }
+// interface Data {
+//     title?: string;
+//     description?: string;
+//     image?: string;
+//   }
   
-  export { Data }
+//   export { Data }

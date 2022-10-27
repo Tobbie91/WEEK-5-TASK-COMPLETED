@@ -4,15 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
-const controllers_1 = require("./controllers");
+const html_metadata_parser_1 = require("html-metadata-parser");
 /*
 implement your server code here
 */
-let url = "https://www.youtube.com/watch?v=eSzNNYk7nVU";
-const server = http_1.default.createServer((req, res) => {
-    if (req.method === "GET" && req.url === "/") {
-        return controllers_1.getResult(req, res, url);
+const server = http_1.default.createServer(async (req, res) => {
+    if (req.url === "/" && req.method === "GET") {
+        const result = await html_metadata_parser_1.parser("https://www.facebook.com/");
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(JSON.stringify(result, null, 2));
+        console.log(JSON.stringify(result, null, 2));
     }
 });
-const PORT = 3120;
-server.listen(PORT, () => `Server is running on port ${PORT}`);
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
