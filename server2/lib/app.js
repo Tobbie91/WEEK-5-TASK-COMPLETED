@@ -10,7 +10,7 @@ implement your server code here
 */
 const server = http_1.default.createServer(async (req, res) => {
     if (req.url === "/" && req.method === "GET") {
-        const result = await html_metadata_parser_1.parser("https://www.facebook.com/");
+        const result = await (0, html_metadata_parser_1.parser)("https://www.youtube.com/");
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(JSON.stringify(result, null, 2));
         console.log(JSON.stringify(result, null, 2));
