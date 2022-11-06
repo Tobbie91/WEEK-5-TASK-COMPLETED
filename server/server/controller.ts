@@ -8,15 +8,15 @@ import { Organization } from './IOrganization';
 
 
 
-const getTasks = (req: IncomingMessage, res: ServerResponse)=>{
-    
+const getTasks = (req: IncomingMessage, res: ServerResponse) => {
 
-    return fs.readFile(path.join(__dirname, "data.json"), "utf-8", (err, data)=>{
-        if(err){
-            res.writeHead(500, {"Content-Type": "application/json"});
-            res.end(JSON.stringify({message: "Error while reading file"}));
+
+    return fs.readFile(path.join(__dirname, "data.json"), "utf-8", (err, data) => {
+        if (err) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Error while reading file" }));
         } else {
-            res.writeHead(200, {"Content-Type": "application/json"});
+            res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true, message: JSON.parse(data) }))
         }
     })
@@ -38,17 +38,17 @@ const addTask = (req: IncomingMessage, res: ServerResponse) => {
                 let newData: Organization[] = JSON.parse(data);
                 //add the new task
                 newData.push(task);
-                
-                    //write the new array to the file
-                    fs.writeFile(path.join(__dirname, 'data.json'), JSON.stringify(newData), (err) => {
-                        if (err) {
-                            res.writeHead(500, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ message: 'Error writing file' }));
-                        } else {
-                            res.writeHead(200, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ success: true, message: 'Task added successfully' }));
-                        }
+
+                //write the new array to the file
+                fs.writeFile(path.join(__dirname, 'data.json'), JSON.stringify(newData), (err) => {
+                    if (err) {
+                        res.writeHead(500, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ message: 'Error writing file' }));
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: true, message: 'Task added successfully' }));
                     }
+                }
                 );
             }
         }
@@ -106,8 +106,8 @@ const deleteTask = (req: IncomingMessage, res: ServerResponse) => {
         let task: Organization = JSON.parse(data);
         fs.readFile(path.join(__dirname, "data.json"), "utf-8", (err, data) => {
             if (err) {
-                res.writeHead(500, {"Content-Type": "application/json"});
-                res.end(JSON.stringify({message: "Error reading file", error: err}));
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ message: "Error reading file", error: err }));
             } else {
                 let newData: [Organization] = JSON.parse(data);
                 //find the index of the task to delete
@@ -117,11 +117,11 @@ const deleteTask = (req: IncomingMessage, res: ServerResponse) => {
                 //write the new array to the file
                 fs.writeFile(path.join(__dirname, "data.json"), JSON.stringify(newData), (err) => {
                     if (err) {
-                        res.writeHead(500, {"Content-Type": "application/json"});
-                        res.end(JSON.stringify({message: "Error writing file", error: err}));
+                        res.writeHead(500, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ message: "Error writing file", error: err }));
                     } else {
-                        res.writeHead(200, {"Content-Type": "application/json"});
-                        res.end(JSON.stringify({success: true, message: "Task deleted successfully"}));
+                        res.writeHead(204, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ success: true, message: "Task deleted successfully" }));
                     }
                 }
                 );

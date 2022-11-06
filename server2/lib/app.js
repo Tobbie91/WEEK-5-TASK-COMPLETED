@@ -16,5 +16,5 @@ const server = http_1.default.createServer(async (req, res) => {
         console.log(JSON.stringify(result, null, 2));
     }
 });
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
